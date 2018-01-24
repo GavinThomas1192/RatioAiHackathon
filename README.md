@@ -8,3 +8,10 @@ Team Members include.
 * Megan Flood
 * Robert Reed
 * Gavin Thomas
+
+## To get up and running...
+
+``` npm install ```
+``` npm run watch ```
+
+* navigate to localhost:xxxx
