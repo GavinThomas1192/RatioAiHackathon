@@ -5,6 +5,10 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 class App extends React.Component {
 
+    handleClick = () => {
+        console.log('hit')
+    }
+
 
 
 
@@ -14,7 +18,7 @@ class App extends React.Component {
                 <BrowserRouter
                     forceRefresh={false}>
                     <div>
-                        <h1> Hello team</h1>
+                        <h1 onClick={this.handleClick}> Hello team</h1>
                     </div>
                 </BrowserRouter>
             </div>
