@@ -18,8 +18,14 @@ io.on('connection', (client) => {
         }, interval);
     });
 
+    client.on('wordsToBeTranslated', audioFile => {
+        file = audioFile
+        console.log(audioFile)
+
+
+    })
+
     client.on('translate', (key) => {
-        console.log('Requesting Auth from AZURE with this key', key);
         request.post(
             {
                 url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
