@@ -11,19 +11,20 @@ class VoiceTranslator extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            AzureCognitiveAccessToken: ''
 
         }
     }
 
 
     handleClick = () => {
-        axios.get('', {
-            params: {
-                'azureClientSecret': __AZURE_CLIENT_SECRET__
-            }
-        })
+
+        axios.post(`https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=` + `${__AZURE_CLIENT_SECRET__}`
+
+        )
             .then((response) => {
                 console.log('azure auth token', response)
+                this.setState({ AzureCognitiveAccessToken: response })
             }).catch((err) => console.log('errrorrr ', err))
     }
 
@@ -37,7 +38,7 @@ class VoiceTranslator extends React.Component {
                     forceRefresh={false}>
                     <div>
                         <Button raised color="primary" onClick={this.handleClick}>
-                            Click me!
+                            Get Azure token!
                         </Button>
                     </div>
                 </BrowserRouter>
