@@ -14,18 +14,24 @@ class VoiceTranslator extends React.Component {
         super(props)
         this.state = {
             AzureCognitiveAccessToken: '',
-            timestamp: 'Nothing yet'
+            timestamp: 'Nothing yet',
+            accessToken: ''
 
         }
     }
 
     componentDidMount() {
         socket.on('timer', timestamp => this.setState({ timestamp }));
+        socket.on('azureAuth', accessToken => this.setState({ accessToken }));
     }
 
     handleStartGetDate = () => {
         socket.emit('subscribeToTimer', 1000);
 
+    }
+
+    handleGetTranslation = () => {
+        socket.emit('translate', `${__AZURE_CLIENT_SECRET__}`)
     }
 
 
@@ -50,13 +56,16 @@ class VoiceTranslator extends React.Component {
                 <BrowserRouter
                     forceRefresh={false}>
                     <div>
-                        <Button raised color="primary" onClick={this.handleClick}>
-                            Get Azure token!
-                        </Button><p>_____</p>
+                        <p>_____</p>
                         <Button raised color="primary" onClick={this.handleStartGetDate}>
                             Start demo timer!
                         </Button>
+                        <p>_____</p>
+                        <Button raised color="primary" onClick={this.handleGetTranslation}>
+                            Start TRANSLATION!
+                        </Button>
                         <h1>timer? ==> {this.state.timestamp} </h1>
+                        <p>auth? ==> {this.state.accessToken}</p>
                     </div>
                 </BrowserRouter>
             </div>
