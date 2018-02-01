@@ -5,6 +5,8 @@ import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import openSocket from 'socket.io-client';
 
+import { ReactMic } from 'react-mic';
+
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 const socket = openSocket('http://localhost:8000');
@@ -16,7 +18,9 @@ class VoiceTranslator extends React.Component {
             AzureCognitiveAccessToken: '',
             timestamp: 'Nothing yet',
             accessToken: '',
-            translation: ''
+            translation: '',
+            record: false,
+            recordedBlobURL: '',
 
         }
     }
@@ -49,6 +53,29 @@ class VoiceTranslator extends React.Component {
             }).catch((err) => console.log('errrorrr ', err))
     }
 
+    startRecording = () => {
+        this.setState({
+            record: true
+        });
+    }
+
+    stopRecording = () => {
+        this.setState({
+            record: false
+        });
+    }
+
+    saveBlob = (url) => {
+        this.setState({ recordedBlobURL: url })
+    }
+
+    onStop(recordedBlob) {
+        // saveBlob(recordedBlob.blobURL)
+        socket.emit('wordsToBeTranslated', recordedBlob.blobURL)
+        console.log('recordedBlob is: ', recordedBlob.blobURL);
+    }
+
+
 
 
 
@@ -66,8 +93,23 @@ class VoiceTranslator extends React.Component {
                         <Button raised color="primary" onClick={this.handleGetTranslation}>
                             Start TRANSLATION!
                         </Button>
-                        <h1>timer? ==> {this.state.timestamp} </h1>
+                        <h1>{this.state.recordedBlobURL !== '' ? `${this.state.recordedBlobURL}` : `Nothing Recorded yet`} </h1>
                         <h3>{this.state.translation}</h3>
+
+                        <ReactMic
+                            record={this.state.record}
+                            className="sound-wave"
+                            onStop={this.onStop}
+                            strokeColor="#000000"
+                            backgroundColor="#FF4081" />
+                        <p>_____</p>
+                        <Button raised color="primary" onClick={this.startRecording}>
+                            Start Recording
+                        </Button>
+                        <Button raised color="primary" onClick={this.stopRecording}>
+                            Stop
+                        </Button>
+
                     </div>
                 </BrowserRouter>
             </div>
