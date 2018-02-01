@@ -16,9 +16,8 @@ let plugins = [
     new DefinePlugin({
         __DEBUG__: JSON.stringify(!production),
         __API_URL__: JSON.stringify(process.env.API_URL),
-        __GOOGLE_CLIENT_ID__: JSON.stringify(process.env.GOOGLE_CLIENT_ID),
-        __AWS_ACCESS_KEY_ID__: JSON.stringify(process.env.AWS_ACCESS_KEY_ID),
-        __AWS_SECRET_ACCESS_KEY__: JSON.stringify(process.env.AWS_SECRET_ACCESS_KEY),
+        __AZURE_CLIENT_SECRET__: JSON.stringify(process.env.AZURE_CLIENT_SECRET)
+
     }),
 ];
 

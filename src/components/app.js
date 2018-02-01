@@ -2,6 +2,8 @@ import React from 'react';
 
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
+import VoiceTranslator from './voiceTranslator'
+
 
 class App extends React.Component {
 
@@ -19,6 +21,7 @@ class App extends React.Component {
                     forceRefresh={false}>
                     <div>
                         <h1 onClick={this.handleClick}> Hello team</h1>
+                        <VoiceTranslator />
                     </div>
                 </BrowserRouter>
             </div>
