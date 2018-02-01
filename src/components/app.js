@@ -7,9 +7,7 @@ import VoiceTranslator from './voiceTranslator'
 
 class App extends React.Component {
 
-    handleClick = () => {
-        console.log('hit')
-    }
+
 
 
 
@@ -20,7 +18,7 @@ class App extends React.Component {
                 <BrowserRouter
                     forceRefresh={false}>
                     <div>
-                        <h1 onClick={this.handleClick}> Hello team</h1>
+                        <h1> Hello team</h1>
                         <VoiceTranslator />
                     </div>
                 </BrowserRouter>
