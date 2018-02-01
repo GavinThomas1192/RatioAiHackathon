@@ -7,6 +7,7 @@ import openSocket from 'socket.io-client';
 
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
+const socket = openSocket('http://localhost:8000');
 
 class VoiceTranslator extends React.Component {
     constructor(props) {
@@ -19,9 +20,12 @@ class VoiceTranslator extends React.Component {
     }
 
     componentDidMount() {
-        const socket = openSocket('http://localhost:8000');
         socket.on('timer', timestamp => this.setState({ timestamp }));
+    }
+
+    handleStartGetDate = () => {
         socket.emit('subscribeToTimer', 1000);
+
     }
 
 
@@ -48,6 +52,9 @@ class VoiceTranslator extends React.Component {
                     <div>
                         <Button raised color="primary" onClick={this.handleClick}>
                             Get Azure token!
+                        </Button><p>_____</p>
+                        <Button raised color="primary" onClick={this.handleStartGetDate}>
+                            Start demo timer!
                         </Button>
                         <h1>timer? ==> {this.state.timestamp} </h1>
                     </div>
