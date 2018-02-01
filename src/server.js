@@ -74,6 +74,7 @@ io.on('connection', (client) => {
             if (message.type == 'utf8') {
                 var result = JSON.parse(message.utf8Data)
                 console.log('type:%s recognition:%s translation:%s', result.type, result.recognition, result.translation);
+                client.emit('translationReturned', result.translation)
             }
             else {
                 // text to speech binary audio data if features=texttospeech is passed in the url
