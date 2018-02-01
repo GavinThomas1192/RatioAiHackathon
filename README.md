@@ -10,9 +10,15 @@ Team Members include.
 * Gavin Thomas
 
 ## To get up and running...
+  * Client Side
 
-``` npm install ```
-``` npm run watch ```
+    ``` npm install ```
+    ``` npm run watch ```
+
+  * Server Side
+    ``` cd ~./src ```
+    ``` node server.js ```
+
 
 * navigate to localhost:xxxx
 
