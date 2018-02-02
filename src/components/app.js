@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 import VoiceTranslator from './voiceTranslator'
 
-
 class App extends React.Component {
 
 

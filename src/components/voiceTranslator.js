@@ -6,7 +6,7 @@ import Button from 'material-ui/Button';
 import openSocket from 'socket.io-client';
 
 
-
+import RecordRTC from 'recordrtc'
 import Recorder from 'react-recorder'
 
 import { ReactMic } from 'react-mic';
@@ -29,6 +29,8 @@ class VoiceTranslator extends React.Component {
 
         }
     }
+
+
 
     componentDidMount() {
         socket.on('timer', timestamp => this.setState({ timestamp }));
@@ -62,12 +64,14 @@ class VoiceTranslator extends React.Component {
         this.setState({
             record: true, command: 'start',
         });
+
     }
 
     stopRecording = () => {
         this.setState({
             record: false, command: 'stop'
         });
+
     }
 
     saveBlob = (url) => {
