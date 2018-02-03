@@ -5,6 +5,8 @@ import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import openSocket from 'socket.io-client';
 
+import AudioRecorder from 'react-audio-recorder';
+
 
 import RecordRTC from 'recordrtc'
 import Recorder from 'react-recorder'
@@ -80,10 +82,15 @@ class VoiceTranslator extends React.Component {
 
 
     onStop(recordedBlob) {
-        console.log(recordedBlob)
+        console.log('recordedBlobl', recordedBlob)
         socket.emit('wordsToBeTranslated', recordedBlob)
 
         // console.log('recordedBlob is: ', recordedBlob);
+    }
+
+    onChange = (AudioRecorderChangeEvent) => {
+        socket.emit('wordsToBeTranslated', AudioRecorderChangeEvent.audioData)
+        console.log(AudioRecorderChangeEvent.audioData)
     }
 
 
@@ -107,9 +114,10 @@ class VoiceTranslator extends React.Component {
                         <h1>{this.state.recordedBlobURL !== '' ? `${this.state.recordedBlobURL}` : `Nothing Recorded yet`} </h1>
                         <h3>{this.state.translation}</h3>
 
-                        <Recorder command={this.state.command} onStop={this.onStop} />
+                        {/* <Recorder command={this.state.command} onStop={this.onStop} /> */}
 
 
+                        <AudioRecorder onChange={(AudioRecorderChangeEvent) => this.onChange(AudioRecorderChangeEvent)} />
 
                         {/* <ReactMic
                             record={this.state.record}
