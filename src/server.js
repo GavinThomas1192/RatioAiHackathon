@@ -7,7 +7,7 @@ var wsClient = require('websocket').client;
 var fs = require('fs');
 var streamBuffers = require('stream-buffers');
 
-var file = 'helloworld.wav';
+var file = 'test.wav';
 
 const save = require('save-file')
 
@@ -30,15 +30,22 @@ io.on('connection', (client) => {
 
 
     client.on('wordsToBeTranslated', blob => {
-        // file = blob
-        // console.log(blob)
-        // var fileReader = new FileReader();
-        // fileReader.onload = function () {
+
+
+        // const whiteNoise1sec = {
+        //     sampleRate: 44100,
+        //     channelData: [
+        //         new Float32Array(44100).map(() => Math.random() - 0.5),
+        //         new Float32Array(44100).map(() => Math.random() - 0.5)
+        //     ]
         // };
-        // fs.writeFileSync('test.wav', Buffer.from(new Uint8Array(this.result)));
-        // fileReader.readAsArrayBuffer(blob);
+
+        // WavEncoder.encode(whiteNoise1sec).then((buffer) => {
+        //     fs.writeFileSync("noise.wav", new Buffer(buffer));
+        // });
 
 
+        fs.writeFileSync('test.wav', blob);
     })
 
     client.on('translate', (key) => {
