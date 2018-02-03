@@ -1,11 +1,21 @@
 const request = require('request');
 const io = require('socket.io')();
 
+
+
 var wsClient = require('websocket').client;
 var fs = require('fs');
 var streamBuffers = require('stream-buffers');
 
 var file = 'helloworld.wav';
+
+const save = require('save-file')
+
+
+var WavEncoder = require('wav-encoder')
+
+var FileReader = require('filereader')
+
 
 
 var speechTranslateUrl = 'wss://dev.microsofttranslator.com/speech/translate?api-version=1.0&from=en&to=fr&features=texttospeech';
@@ -18,14 +28,21 @@ io.on('connection', (client) => {
         }, interval);
     });
 
-    client.on('wordsToBeTranslated', audioFile => {
-        file = audioFile
-        console.log(audioFile)
+
+    client.on('wordsToBeTranslated', blob => {
+        // file = blob
+        // console.log(blob)
+        // var fileReader = new FileReader();
+        // fileReader.onload = function () {
+        // };
+        // fs.writeFileSync('test.wav', Buffer.from(new Uint8Array(this.result)));
+        // fileReader.readAsArrayBuffer(blob);
 
 
     })
 
     client.on('translate', (key) => {
+        console.log('this is file before translation', file)
         request.post(
             {
                 url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
@@ -91,6 +108,7 @@ io.on('connection', (client) => {
 
         // load the file and send the data to the websocket connection in chunks
         function sendData(connection, filename) {
+            console.log('first', filename)
 
             // the streambuffer will raise the 'data' event based on the frequency and chunksize
             var myReadableStreamBuffer = new streamBuffers.ReadableStreamBuffer({
@@ -99,6 +117,8 @@ io.on('connection', (client) => {
             });
 
             // read the file and put it to the buffer
+            console.log('second', file)
+            // myReadableStreamBuffer.put(filename);
             myReadableStreamBuffer.put(fs.readFileSync(filename));
 
             // silence bytes.  If the audio file is too short after the user finished speeaking,
@@ -111,6 +131,8 @@ io.on('connection', (client) => {
 
             // send data to underlying connection
             myReadableStreamBuffer.on('data', function (data) {
+                console.log('third', data)
+
                 connection.sendBytes(data);
             });
 
