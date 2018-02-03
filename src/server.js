@@ -108,7 +108,6 @@ io.on('connection', (client) => {
 
         // load the file and send the data to the websocket connection in chunks
         function sendData(connection, filename) {
-            console.log('first', filename)
 
             // the streambuffer will raise the 'data' event based on the frequency and chunksize
             var myReadableStreamBuffer = new streamBuffers.ReadableStreamBuffer({
@@ -117,7 +116,6 @@ io.on('connection', (client) => {
             });
 
             // read the file and put it to the buffer
-            console.log('second', file)
             // myReadableStreamBuffer.put(filename);
             myReadableStreamBuffer.put(fs.readFileSync(filename));
 
@@ -131,7 +129,6 @@ io.on('connection', (client) => {
 
             // send data to underlying connection
             myReadableStreamBuffer.on('data', function (data) {
-                console.log('third', data)
 
                 connection.sendBytes(data);
             });
